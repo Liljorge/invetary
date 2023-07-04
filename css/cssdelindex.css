@@ -1,0 +1,12 @@
+h1{
+    text-align: center;
+    background-color: brown;
+}
+.image-container {
+    text-align: center;
+}
+
+.image-container img {
+    display: block;
+    margin: 0 auto;
+}

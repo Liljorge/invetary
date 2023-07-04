@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../css/stile2.0.css">
+    <title>Inventario de Animales</title>
+</head>
+<body>
+    <h1>Inventario de Animales</h1>
+
+    <form id="animal-form">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" required><br>
+
+        <label for="tipo">Tipo:</label>
+        <select id="tipo" required>
+          <option value="Seleccionar">Seleccionar</option>
+          <option value="Bovino">Bovino</option>
+          <option value="Equino">Equino</option>
+        
+        </select><br>
+        
+
+        <label for="fecha-nacimiento">Fecha de Nacimiento:</label>
+        <input type="date" id="fecha-nacimiento" required><br>
+
+        <label for="hierro">Hierro:</label>
+        <input type="text" id="hierro" required><br>
+
+        <label for="numero-hierro">Número de Hierro:</label>
+        <input type="text" id="numero-hierro" required><br>
+
+        <label for="fecha-desparasitante">Fecha del Desparasitante:</label>
+        <input type="date" id="fecha-desparasitante" required><br>
+
+        <label for="fecha-vitaminizacion">Fecha de Vitaminización:</label>
+        <input type="date" id="fecha-vitaminizacion" required><br>
+
+        <label for="detalles">Detalles:</label>
+        <textarea id="detalles" rows="4"></textarea><br>
+
+        <input type="hidden" id="animal-index">
+
+        <button type="button" id="agregar-btn" onclick="agregarAnimal()">Agregar</button>
+        <button type="button" id="actualizar-btn" style="display: none;" onclick="actualizarAnimal()">Actualizar</button>
+        <button type="button" id="cancelar-btn" style="display: none;" onclick="cancelarEdicion()">Cancelar</button><br>
+        <label for="filtro">Buscar:</label>
+        <input type="text" id="filtro" oninput="filtrarAnimales()"><br>
+    </form>
+
+    <h2>Inventario Actual</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Fecha de Nacimiento</th>
+                <th>Hierro</th>
+                <th>Número de Hierro</th>
+                <th>Fecha del Desparasitante</th>
+                <th>Fecha de Vitaminización</th>
+                <th>Detalles</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+
+        </tbody>
+    </table>
+
+    <script>
+
+        function obtenerInventario() {
+            var inventario = localStorage.getItem('inventario');
+            if (inventario) {
+                return JSON.parse(inventario);
+            } else {
+                return [];
+            }
+        }
+
+
+        function guardarInventario(inventario) {
+            localStorage.setItem('inventario', JSON.stringify(inventario));
+        }
+
+        function agregarAnimal() {
+            var nombre = document.getElementById("nombre").value;
+            var tipo = document.getElementById("tipo").value;
+            var fechaNacimiento = document.getElementById("fecha-nacimiento").value;
+            var hierro = document.getElementById("hierro").value;
+            var numeroHierro = document.getElementById("numero-hierro").value;
+            var fechaDesparasitante = document.getElementById("fecha-desparasitante").value;
+            var fechaVitaminizacion = document.getElementById("fecha-vitaminizacion").value;
+            var detalles = document.getElementById("detalles").value;
+
+            var animal = {
+                nombre: nombre,
+                tipo: tipo,
+                fechaNacimiento: fechaNacimiento,
+                hierro: hierro,
+                numeroHierro: numeroHierro,
+                fechaDesparasitante: fechaDesparasitante,
+                fechaVitaminizacion: fechaVitaminizacion,
+                detalles: detalles
+            };
+
+            var inventario = obtenerInventario();
+            inventario.push(animal);
+            guardarInventario(inventario);
+
+            mostrarInventario();
+        }
+
+        function eliminarAnimal(index) {
+            var inventario = obtenerInventario();
+            inventario.splice(index, 1);
+            guardarInventario(inventario);
+
+            mostrarInventario();
+        }
+
+        function editarAnimal(index) {
+            var animal = obtenerInventario()[index];
+
+            document.getElementById("nombre").value = animal.nombre;
+            document.getElementById("tipo").value = animal.tipo;
+            document.getElementById("fecha-nacimiento").value = animal.fechaNacimiento;
+            document.getElementById("hierro").value = animal.hierro;
+            document.getElementById("numero-hierro").value = animal.numeroHierro;
+            document.getElementById("fecha-desparasitante").value = animal.fechaDesparasitante;
+            document.getElementById("fecha-vitaminizacion").value = animal.fechaVitaminizacion;
+            document.getElementById("detalles").value = animal.detalles;
+
+            document.getElementById("animal-index").value = index;
+
+            document.getElementById("agregar-btn").style.display = "none";
+            document.getElementById("actualizar-btn").style.display = "inline";
+            document.getElementById("cancelar-btn").style.display = "inline";
+        }
+
+
+        function actualizarAnimal() {
+            var index = document.getElementById("animal-index").value;
+
+            var nombre = document.getElementById("nombre").value;
+            var tipo = document.getElementById("tipo").value;
+            var fechaNacimiento = document.getElementById("fecha-nacimiento").value;
+            var hierro = document.getElementById("hierro").value;
+            var numeroHierro = document.getElementById("numero-hierro").value;
+            var fechaDesparasitante = document.getElementById("fecha-desparasitante").value;
+            var fechaVitaminizacion = document.getElementById("fecha-vitaminizacion").value;
+            var detalles = document.getElementById("detalles").value;
+
+            var animal = {
+                nombre: nombre,
+                tipo: tipo,
+                fechaNacimiento: fechaNacimiento,
+                hierro: hierro,
+                numeroHierro: numeroHierro,
+                fechaDesparasitante: fechaDesparasitante,
+                fechaVitaminizacion: fechaVitaminizacion,
+                detalles: detalles
+            };
+
+            var inventario = obtenerInventario();
+            inventario[index] = animal;
+            guardarInventario(inventario);
+
+            mostrarInventario();
+
+            cancelarEdicion();
+        }
+        function cancelarEdicion() {
+            document.getElementById("animal-form").reset();
+
+            document.getElementById("agregar-btn").style.display = "inline";
+            document.getElementById("actualizar-btn").style.display = "none";
+            document.getElementById("cancelar-btn").style.display = "none";
+        }
+
+        function mostrarInventario() {
+            var inventario = obtenerInventario();
+            var tableBody = document.getElementById("table-body");
+            tableBody.innerHTML = "";
+
+            for (var i = 0; i < inventario.length; i++) {
+                var animal = inventario[i];
+
+                var row = document.createElement("tr");
+                row.innerHTML = "<td>" + animal.nombre + "</td>" +
+                    "<td>" + animal.tipo + "</td>" +
+                    "<td>" + animal.fechaNacimiento + "</td>" +
+                    "<td>" + animal.hierro + "</td>" +
+                    "<td>" + animal.numeroHierro + "</td>" +
+                    "<td>" + animal.fechaDesparasitante + "</td>" +
+                    "<td>" + animal.fechaVitaminizacion + "</td>" +
+                    "<td>" + animal.detalles + "</td>" +
+                    "<td><button onclick='eliminarAnimal(" + i + ")'>Eliminar</button>" +
+                    "<button onclick='editarAnimal(" + i + ")'>Editar</button></td>";
+
+                tableBody.appendChild(row);
+            }
+        }
+
+        window.onload = function () {
+            mostrarInventario();
+        };
+    </script>
+      <script>
+        function filtrarAnimales() {
+            var filtro = document.getElementById("filtro").value.toLowerCase();
+            var tableBody = document.getElementById("table-body");
+            var filas = tableBody.getElementsByTagName("tr");
+
+            for (var i = 0; i < filas.length; i++) {
+                var fila = filas[i];
+                var nombreColumna = fila.getElementsByTagName("td")[0];
+
+                if (nombreColumna) {
+                    var nombre = nombreColumna.textContent.toLowerCase();
+
+                    if (nombre.indexOf(filtro) !== -1) {
+                        fila.style.display = "";
+                    } else {
+                        fila.style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

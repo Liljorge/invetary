@@ -1,0 +1,120 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-image: url(https://scontent.fctg1-4.fna.fbcdn.net/v/t39.30808-6/357520789_3550651271922381_4154836722213377859_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=730e14&_nc_eui2=AeHackQA6I-NrYlNCRb4XyHs1rDfp4kKugvWsN-niQq6C0VbiRZB4txqdBqpPdx2VPwXkkHwTzw0-M-Q7a0h1lHK&_nc_ohc=aMzPgQzKiOoAX-8edup&_nc_ht=scontent.fctg1-4.fna&oh=00_AfAoIIz2fgvpscrM0Bg4fF22XtUXCNi_WzJ7gKrdaCRb1A&oe=64A80894);
+  }
+  
+  h1 {
+    text-align: center;
+    color: #333;
+    font-size: 48px;
+  }
+  
+  label {
+    font-weight: bold;
+  }
+  
+  input[type="text"],
+  input[type="date"],
+  textarea {
+    width: 250px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  
+  button {
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Estilos de la tabla */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  thead {
+    background-color: #f2f2f2;
+  }
+  
+  th,
+  td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* Estilos del campo de búsqueda */
+  #filtro {
+    margin-top: 10px;
+    width: 250px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  /* Estilos de los botones de acción en la tabla */
+  table button {
+    padding: 5px 10px;
+    margin-right: 5px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  
+  table button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Estilos de los botones de agregar, actualizar y cancelar */
+  #agregar-btn,
+  #actualizar-btn,
+  #cancelar-btn {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  #actualizar-btn,
+  #cancelar-btn {
+    display: none;
+  }
+  
+  #actualizar-btn,
+  #cancelar-btn {
+    margin-left: 10px;
+  }
+  
+  #cancelar-btn {
+    background-color: #f44336;
+  }
+  
+  #cancelar-btn:hover {
+    background-color: #d32f2f;
+  }
+  
+  
